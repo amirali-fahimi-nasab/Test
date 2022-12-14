@@ -1,26 +1,10 @@
 from rest_framework import serializers
 
-from django.contrib.auth.models import User
-
-from .models import Blog , Comment
+from .models import Blog
 
 
-
-class BlogSerializers(serializers.ModelSerializer):
+class BlogSerializer(serializers.Serializer):
 
     class Meta:
         model = Blog
-        fields = "__all__"
-        extra_kwargs = {'title':{'required':True}}
-
-
-
-
-
-class CommentSerializers(serializers.ModelSerializer):
-    email = serializers.EmailField(source='user.email')
-
-    class Meta:
-        model = Comment
-        fields = "__all__"
-
+        fields = ("title","body")
