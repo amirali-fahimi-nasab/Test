@@ -9,6 +9,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 
+
 class ChangePriceSerializers(serializers.Serializer):
     old_price = serializers.CharField(max_length = 25)
     new_price = serializers.CharField(max_length = 25)

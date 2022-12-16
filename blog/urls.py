@@ -1,12 +1,9 @@
-from django.urls import path
 
-from . import views as blog_views
+from rest_framework import routers
 
-
-
-urlpatterns = [
-   path('list_blogs/' , blog_views.BlogView.as_view({'get':'list'}) name = 'blog_views'),
-   ]
+from .views import BlogViews
 
 
-
+router = routers.SimpleRouter()
+router.register('blog', BlogViews , basename = 'blogs')
+urlpatterns = router.urls

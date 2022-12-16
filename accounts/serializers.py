@@ -5,13 +5,20 @@ from django.contrib.auth.models import User
 from .models import Profile , VerifyEmail , ChangePassword
 
 
-class UserSerialization(serializers.ModelSerializer):
+class UserSerializer(serializers.Serializer):
+    model  = User
+    username = serializers.CharField(max_length = 60 , required = True)
+    password = serializers.CharField(max_length = 24 , required = True)
 
-    class Meta:
-        model = User
-        fields = ['id','username' , 'email' ,'password']
-        extra_kwargs = {'username':{'required':True} , 'email':{'required':True}}
+class UserRegistrationSerializers(serializers.Serializer):
+    first_name = serializers.CharField(max_length=200, required=True)
+    last_name = serializers.CharField(max_length=200, required=True)
+    email = serializers.EmailField(required=True)
+    phone_number = serializers.CharField(max_length=20 , required=True)
+    address = serializers.CharField(max_length=400, required=True)
+    national_id = serializers.IntegerField(required=True)
 
+    date_created = serializers.DateTimeField()
 
 
 class ProfileSerializer(serializers.ModelSerializer):

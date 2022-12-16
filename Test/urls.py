@@ -21,8 +21,8 @@ from rest_framework.schemas import get_schema_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/' , include('accounts.urls')),
+    path('blogs/' , include('blog.urls')),
     path('products/',include('product.urls')),
-    path('blogs/', include('blog.urls')),
 
      path('openapi/', get_schema_view(
         title="Your Project",

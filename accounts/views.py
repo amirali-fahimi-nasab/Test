@@ -26,7 +26,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework import generics
 
-from .serializers import ProfileSerializer, VerifyEmailSerializer, UserSerialization, ChangeMobileSerializer, \
+from .serializers import ProfileSerializer, VerifyEmailSerializer, UserRegistrationSerializers, ChangeMobileSerializer, \
     ChangPasswordSerializer, LoginSerializer, ChangeUsernameSerializer
 from .models import Profile, VerifyEmail, VerifyMobile, ChangePassword
 
@@ -77,13 +77,16 @@ def list_users(request):
 class RegisterUser(APIView):
 
     def post(self, request):
-        ser_data = UserSerialization(data=request.data)
+        ser_data = UserRegistrationSerializers(data=request.data)
 
         if ser_data.is_valid(raise_exception=True):
             User.objects.create_user(
-                username=ser_data.validated_data['username'],
-                email=ser_data.validated_data['email'],
-                password=ser_data.validated_data['password'],
+                first_name = ser_data.validated_data['first_name'],
+                last_name = ser_data.validated_data['last_name'],
+                email = ser_data.validated_data['email'],
+                phone_number = ser_data.validated_data['phone_number'],
+                address = ser_data.validated_data['address'],
+                national_id = ser_data.validated_data['national_id'],
             )
 
             return Response(data=ser_data.data, status=201)
@@ -93,7 +96,7 @@ class RegisterUser(APIView):
 
 class CreateSuperUser(APIView):
     def post(self , request):
-        ser_data = UserSerialization(data = request.data)
+        ser_data = UserRegistrationSerializers(data = request.data)
         if ser_data.is_valid():
             User.objects.create_superuser(username = ser_data.validated_data['username'],
                                           email = ser_data.validated_data['email'],
